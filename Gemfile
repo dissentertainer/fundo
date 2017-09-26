@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'simple_form'
 gem 'materialize-sass'
 gem 'jquery-rails'
+gem 'material_icons'
 
 group :development, :test do
   gem 'rspec-rails'
