@@ -20,11 +20,24 @@ gem 'materialize-sass'
 gem 'jquery-rails'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'
+  gem 'awesome_print'
+  gem 'dotenv-rails'
+  gem 'fuubar'
+  gem 'httparty'
+  gem 'pry-byebug'
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
+end
+
+group :test do
+  gem 'simple_bdd'
+  gem 'poltergeist'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'faker'  
 end
 
 group :development do
