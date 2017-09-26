@@ -19,6 +19,7 @@ gem 'simple_form'
 gem 'materialize-sass'
 gem 'jquery-rails'
 gem 'material_icons'
+gem 'slim-rails'
 
 group :development, :test do
   gem 'rspec-rails'
