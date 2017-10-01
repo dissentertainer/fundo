@@ -1,0 +1,27 @@
+doctype html
+
+html
+  head
+    title Fundo
+    = csrf_meta_tags
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag "//maps.google.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}", 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
+    .navbar-fixed
+      nav
+        .nav-wrapper
+          .container
+            .row
+              .col.s12
+                = link_to '#', class: 'brand-logo' do
+                  span Fundo
+                /* ul#nav-mobile.right.hide-on-med-and-down
+                  li= link_to 'About', '#'
+                  li= link_to 'Sign Up', '#'
+                  li= link_to 'Log In', '#' */
+
+    = yield
+
+    = render 'layouts/footer'

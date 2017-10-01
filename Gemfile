@@ -20,6 +20,9 @@ gem 'materialize-sass'
 gem 'jquery-rails'
 gem 'material_icons'
 gem 'slim-rails'
+gem 'geocoder'
+gem 'webpacker', '~> 3.0'
+gem 'paperclip'
 
 group :development, :test do
   gem 'rspec-rails'

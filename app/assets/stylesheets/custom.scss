@@ -1,1 +1,130 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "materialize/components/color";
+$primary-color: color("pink", "base") !default;
+$secondary-color: color("blue", "lighten-1") !default;
+@import "materialize";
+@import "materialize/extras/nouislider";
 
+/* COLORS */
+
+body {
+  @extend .grey-text, .text-darken-4;
+}
+
+/* COMPONENTS */
+
+.hero {
+  background-color: rgba(233,30,99,0.6);
+  color: #fff !important;
+  height:540px;
+  padding-top:100px;
+  position: relative;
+  .hero-icon {
+    width: 175px;
+    height: 175px;
+  }
+  .scroller-link a {
+    color: #fff;
+  }
+}
+
+.scroller-link {
+  position:absolute;
+  height:8.5em;
+  bottom:0;
+  left:45.5%;
+}
+
+#map {
+  width:100%;
+  height: 599px;
+  position:absolute;
+  top:5px;
+  left:0;
+  z-index: -1;
+}
+
+.page-footer {
+  padding-bottom: 20px;
+}
+
+#how-it-works {
+  .card-panel {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+/* TYPOGRAPHY */
+
+body {
+  font-weight: 300;
+  font-size:1.2em;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+
+h1, h2, h3 {
+  color: $primary-color;
+}
+
+.hero h1, h2 {
+  color: #fff;
+}
+
+h6 {
+  font-weight:500;
+  text-transform: uppercase;
+  letter-spacing:0.225em;
+  line-height:1.5em;
+}
+
+.flow-text {
+  font-weight: 300;
+  @extend .light;
+}
+
+.heavy {
+  font-weight: 600;
+}
+
+.light {
+  font-weight: 200;
+}
+
+/* BUTTONS AND CONTROLS */
+
+.btn-inverted {
+  background-color:transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  &:hover {
+    background-color: $primary-color
+  }
+}
+
+/* ICONS AND IMAGES */
+
+.panel-icon {
+  margin-top:5px;
+  @extend .pink-text
+}
+
+
+/* RESPONSIVE STYLES */
+
+@media only screen and (max-width: 600px) {
+  #map {
+    height: 590px;
+  }
+
+  .scroller-link {
+    left: 38%;
+  }
+}
