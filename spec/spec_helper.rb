@@ -15,12 +15,25 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.before(:example, type: :feature) do
-    Rails.application.config.email_client.driver = page.driver
-  end
-
   config.before :each, [{type: :feature}, {db_seeds: true}] do
     load Rails.root.join('db/seeds.rb')
+  end
+
+  config.before :each do
+    Geocoder.configure(:lookup => :test)
+
+    Geocoder::Lookup::Test.set_default_stub(
+      [
+        {
+          'coordinates'  => [40.7053762, -73.9335617],
+          'address'      => 'Brooklyn, NY, USA',
+          'state'        => 'New York',
+          'state_code'   => 'NY',
+          'country'      => 'United States',
+          'country_code' => 'US'
+        }
+      ]
+    )
   end
 
   config.after(:suite) do

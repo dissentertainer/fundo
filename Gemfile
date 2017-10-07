@@ -27,6 +27,8 @@ gem 'webpacker', '~> 3.0'
 gem 'paperclip'
 gem 'country_select'
 gem 'validates_zipcode'
+gem 'redis', '~> 3.0.4'
+gem 'redis-namespace', '~> 1.3.2'
 
 group :development, :test do
   gem 'rspec-rails'
