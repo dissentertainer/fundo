@@ -1,17 +1,26 @@
 document.addEventListener("turbolinks:load", function() {
 
-  var user_location = JSON.parse(document.querySelector('#map').dataset.location);
-  window.user_location = user_location;
+  var loc = JSON.parse(document.querySelector('#map').dataset.location);
+  window.loc = loc;
 
   var map = new GMaps({
     div: '#map',
-    zoom: 12,
-    lat: user_location.latitude,
-    lng: user_location.longitude,
+    lat: loc.latitude,
+    lng: loc.longitude,
     disableDefaultUI: true,
     scrollwheel: false
   });
 
-  window.map = map;
+  var bounds = google.maps.LatLngBounds();
 
+  if (loc.latitude && loc.longitude) {
+    var marker = map.addMarker({
+      lat: loc.latitude,
+      lng: loc.longitude
+    });
+
+    bounds.extend(marker.position);
+  }
+
+  map.fitBounds(bounds);
 });

@@ -1,0 +1,61 @@
+.section.hero
+  .container
+    .row
+      .col.s10.offset-s1.center
+        h2 
+          span.heavy> Love
+          span.light> the place you
+          span.heavy live.
+        p.flow-text Create a community foundation to support the projects and people doing good things in your neighborhood.
+        
+    .scroller-link
+      h6.center
+        = link_to '#how-it-works'
+          span Learn more
+          br
+          i.material-icons.medium keyboard_arrow_down
+
+#how-it-works.section.scrollspy
+  .container
+    .row
+      .col.s12
+        h3 How it works
+        p.flow-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+    .row
+      .col.s12.m8.offset-m2.card-panel
+        .col.s12.m2.center
+          i.material-icons.center.medium.panel-icon account_balance
+        .col.s12.m10
+          h6 New Foundation Proposed
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+      .col.s12.m8.offset-m2.card-panel
+        .col.s12.m2.center
+          i.material-icons.center.medium.panel-icon verified_user
+        .col.s12.m10
+          h6 Foundation Activated
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+      .col.s12.m8.offset-m2.card-panel
+        .col.s12.m2.center
+          i.material-icons.center.medium.panel-icon loyalty
+        .col.s12.m10
+          h6 Tokens Issued to Funding Members
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+      .col.s12.m8.offset-m2.card-panel
+        .col.s12.m2.center
+          i.material-icons.center.medium.panel-icon thumb_up
+        .col.s12.m10
+          h6 Tokens Circulate to Project Leaders
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+      .col.s12.m8.offset-m2.card-panel
+        .col.s12.m2.center
+          i.material-icons.center.medium.panel-icon mood
+        .col.s12.m10
+          h6 Tokens Redeemed for Project Funding
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pretium sed dolor eu eleifend. Aenean tortor nibh, ullamcorper ut ligula tempor, volutpat rhoncus erat. 
+
+    .row
+      .col.s12.center
+        = link_to new_foundation_path, class: 'btn-large pink', id: 'create-foundation'
+          i.material-icons.left add_circle_outline
+          | Create foundation
+= tag.div nil, id:'map', class: 'section home-page', data: { location: @location.data.to_json }
