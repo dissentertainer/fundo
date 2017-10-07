@@ -5,6 +5,7 @@ document.addEventListener("turbolinks:load", function() {
 
   var map = new GMaps({
     div: '#map',
+    zoom: 12,
     lat: user_location.latitude,
     lng: user_location.longitude,
     disableDefaultUI: true,
