@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171007015746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "foundations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "country_code"
+    t.string "local_currency"
+    t.string "postal_code"
+    t.integer "min_starting_funds"
+    t.integer "min_participants"
+    t.datetime "activation_deadline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_foundations_on_created_at"
+  end
 
 end
