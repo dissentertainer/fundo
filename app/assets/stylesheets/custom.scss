@@ -2,6 +2,7 @@
 @import "materialize/components/color";
 $primary-color: color("pink", "base") !default;
 $secondary-color: color("blue", "lighten-1") !default;
+$muted-color: color("grey", "base") !default;
 @import "materialize";
 @import "materialize/extras/nouislider";
 
@@ -18,7 +19,6 @@ body {
 }
 
 .hero {
-  background-color: rgba(233,30,99,0.6);
   color: #fff !important;
   height:540px;
   margin-top:-60px;
@@ -46,6 +46,16 @@ body {
   height: 599px;
   top:5px;
   left:0;
+  z-index: -2;
+}
+
+#map-overlay {
+  background-color: rgba(233,30,99,0.6);
+  width:100%;
+  position: absolute;
+  height: 599px;
+  top: 5px;
+  left: 0;
   z-index: -1;
 }
 
@@ -64,6 +74,9 @@ body {
   .card-panel {
     padding-top: 20px;
     padding-bottom: 20px;
+    h6 {
+      @extend .pink-text;
+    }
   }
 }
 
@@ -82,7 +95,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: $primary-color;
 }
 
@@ -123,6 +136,13 @@ h6 {
 
 /* BUTTONS AND CONTROLS */
 
+.btn {
+  background-color: $primary-color;
+  &:hover {
+    background-color: color("pink", "darken-2")
+  }
+}
+
 .btn-inverted {
   background-color:transparent;
   color: #fff;
@@ -136,7 +156,7 @@ h6 {
 
 .panel-icon {
   margin-top:5px;
-  @extend .pink-text
+  @extend .pink-text;
 }
 
 /* FORMS */
@@ -145,6 +165,25 @@ input {
   margin-bottom: 8px !important;
 }
 
+.input {
+  margin-bottom: 20px;
+}
+
+.form-input {
+  margin-bottom: 10px;
+}
+
+.login-shared-links {
+  margin-top:10px;
+  .login-or-signup {
+    margin-top:20px;
+    border-top:1px solid $muted-color;
+  }
+}
+
+.hint {
+  @extend .help-text;
+}
 
 /* RESPONSIVE STYLES */
 

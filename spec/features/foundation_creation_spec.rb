@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'In order to hold community funds securely' do
+  include AuthenticationHelpers
+
+  background do
+    @user = a_signed_in_user
+  end
 
   scenario 'A donor creates a foundation proposal and deploys it to the Ethereum blockchain' do
     Given 'a donor on the landing page'
