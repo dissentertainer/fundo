@@ -1,0 +1,41 @@
+.container
+  .row
+    .col.s12
+      h3 Create a foundation for your community
+
+      p.flow-text
+        | Complete the information below to deploy your foundation to the Ethereum blockchain. 
+          Once your foundations achieves the thresholds you define for minimum participants and minimum funds, 
+          it will activate and disburse local currency token to all contributors in recognition of their contribution.
+
+  .row
+    = form_with model: @foundation do |f|
+      .row
+        .col.s12.m6
+          = f.label :country_alpha2, 'Country'
+          = f.country_select :country_alpha2, { selected: @user_country_code }, { id: 'foundation_country_alpha2' }
+        .col.s12.m6
+          = f.label :local_currency, 'Local currency'
+          = f.text_field :local_currency, id: :foundation_local_currency, value: @user_local_currency 
+      .row
+        .col.s12.m6
+          = f.label :postal_code, 'Postal code'
+          = f.text_field :postal_code, id: :foundation_postal_code
+          .help-text What local community will the foundation serve?
+        .col.s12.m6
+          = f.label :min_starting_funds
+            span Minimum starting funds
+          = f.text_field :min_starting_funds, id: :foundation_min_starting_funds
+          .help-text How much must be pledged by all participants for the foundation to activate?
+      .row
+        .col.s12.m6
+          = f.label :min_participants
+            span Minimum participants
+          = f.text_field :min_participants, id: :foundation_min_participants
+          .help-text How many contributors are required for the foundation to activate?
+        .col.s12.m6
+          = f.label :activation_deadline, 'Activation deadline'
+          = f.text_field :activation_deadline, id: :foundation_activation_deadline, class: 'datepicker'
+          .help-text If the foundation doesn't activate by this date, it will expire
+      = button_tag 'Create', class: 'btn-large pink', id: 'create', data: { disable_with: "Creating..."}
+      

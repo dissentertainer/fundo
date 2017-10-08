@@ -55,7 +55,7 @@
 
     .row
       .col.s12.center
-        a class="btn-large pink"
+        = link_to new_foundation_path, class: 'btn-large pink', id: 'create-foundation'
           i.material-icons.left add_circle_outline
           | Create foundation
-= tag.div nil, id:'map', class: 'section', data: { location: @location.data.to_json }
+= tag.div nil, id:'map', class: 'section home-page', data: { location: @location.data.to_json }

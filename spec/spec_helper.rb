@@ -15,12 +15,35 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.before(:example, type: :feature) do
-    Rails.application.config.email_client.driver = page.driver
-  end
-
   config.before :each, [{type: :feature}, {db_seeds: true}] do
     load Rails.root.join('db/seeds.rb')
+  end
+
+  config.before :each do
+    Geocoder.configure(:lookup => :test)
+
+    Geocoder::Lookup::Test.set_default_stub(
+      [
+        {"address_components"=>
+          [{"long_name"=>"362", "short_name"=>"362", "types"=>["street_number"]},
+           {"long_name"=>"Suydam Street", "short_name"=>"Suydam St", "types"=>["route"]},
+           {"long_name"=>"Bushwick", "short_name"=>"Bushwick", "types"=>["neighborhood", "political"]},
+           {"long_name"=>"Brooklyn", "short_name"=>"Brooklyn", "types"=>["political", "sublocality", "sublocality_level_1"]},
+           {"long_name"=>"Kings County", "short_name"=>"Kings County", "types"=>["administrative_area_level_2", "political"]},
+           {"long_name"=>"New York", "short_name"=>"NY", "types"=>["administrative_area_level_1", "political"]},
+           {"long_name"=>"United States", "short_name"=>"US", "types"=>["country", "political"]},
+           {"long_name"=>"11237", "short_name"=>"11237", "types"=>["postal_code"]},
+           {"long_name"=>"2954", "short_name"=>"2954", "types"=>["postal_code_suffix"]}],
+         "formatted_address"=>"362 Suydam St, Brooklyn, NY 11237, USA",
+         "geometry"=>
+          {"bounds"=>{"northeast"=>{"lat"=>40.7043447, "lng"=>-73.921184}, "southwest"=>{"lat"=>40.7042351, "lng"=>-73.9213449}},
+           "location"=>{"lat"=>40.7042899, "lng"=>-73.9212644},
+           "location_type"=>"ROOFTOP",
+           "viewport"=>{"northeast"=>{"lat"=>40.7056388802915, "lng"=>-73.91991546970849}, "southwest"=>{"lat"=>40.7029409197085, "lng"=>-73.9226134302915}}},
+         "place_id"=>"ChIJ-SpSVRxcwokRgcfCMb3b66g",
+         "types"=>["premise"]}
+      ]
+    )
   end
 
   config.after(:suite) do
