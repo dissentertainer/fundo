@@ -11,6 +11,11 @@ html
     meta name="viewport" content="width=device-width, initial-scale=1"
 
     .navbar-fixed
+      ul#user-menu.dropdown-content
+        li= link_to destroy_user_session_path, method: :delete, id: 'sign-out'
+          i.material-icons.left highlight_off
+          span< Sign out
+      
       nav
         .nav-wrapper
           .container
@@ -18,15 +23,19 @@ html
               .col.s12
                 = link_to root_path, class: 'brand-logo' do
                   span Fundo
-                /* ul#nav-mobile.right.hide-on-med-and-down
-                  li= link_to 'About', '#'
-                  li= link_to 'Sign Up', '#'
-                  li= link_to 'Log In', '#' */
+                ul#nav-mobile.right.hide-on-med-and-down
+                  - if !user_signed_in? 
+                    li= link_to 'Sign Up', new_user_registration_path, id: 'sign-up', class: 'btn btn-small btn-inverted'
+                    li= link_to 'Sign In', new_user_session_path, id: 'sign-in', class: 'btn btn-small btn-inverted'
+                  - else
+                    li= link_to '#!', data: { activates: 'user-menu' }, class: 'dropdown-button'
+                      = current_user.full_name
+                      i.material-icons.right arrow_drop_down
 
     .page
       - flash.each do |message_type, message|
         = javascript_tag "Materialize.toast('#{message}', 10000)"
-      
-      = yield
+      .container 
+        = yield
 
     = render 'layouts/footer'

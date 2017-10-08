@@ -1,4 +1,6 @@
 class FoundationsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     country = get_user_country
     @user_country_code = country.alpha2

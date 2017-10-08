@@ -14,4 +14,6 @@ document.addEventListener("turbolinks:load", function() {
 
   $('ul.tabs').tabs();
 
+  $(".dropdown-button").dropdown();
+
 });
