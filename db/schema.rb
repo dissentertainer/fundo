@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009075306) do
+ActiveRecord::Schema.define(version: 20171009094939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20171009075306) do
     t.string "locality_name"
     t.string "address"
     t.datetime "activated_on"
-    t.decimal "balance", default: "0.0"
     t.index ["created_at"], name: "index_foundations_on_created_at"
   end
 
@@ -59,6 +58,16 @@ ActiveRecord::Schema.define(version: 20171009075306) do
     t.index ["user_id"], name: "index_pledges_on_user_id"
   end
 
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.uuid "foundation_id"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_transactions_on_created_at"
+    t.index ["foundation_id"], name: "index_transactions_on_foundation_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -82,4 +91,5 @@ ActiveRecord::Schema.define(version: 20171009075306) do
   add_foreign_key "payments", "pledges"
   add_foreign_key "pledges", "foundations"
   add_foreign_key "pledges", "users"
+  add_foreign_key "transactions", "foundations"
 end

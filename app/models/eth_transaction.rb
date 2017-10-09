@@ -1,0 +1,3 @@
+class EthTransaction < Transaction
+
+end

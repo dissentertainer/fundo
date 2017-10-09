@@ -19,6 +19,10 @@ feature 'In order to activate a foundation' do
   end
 
   def a_user_makes_a_pledge_that_meets_the_thresholds
+    stub_request(:get, "https://api.coinmarketcap.com/v1/ticker/ethereum/").
+         with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+         to_return(body: '[{ "price_usd": "304.711" }]', headers: { 'content-type'=>'application/json' } )
+
     visit root_path
     within('#nav-mobile') do
       click_on 'user-menu-toggle'
@@ -51,8 +55,12 @@ feature 'In order to activate a foundation' do
       expect(page).to have_content "activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>."
     end
     within('#balance') do
-      expect(page).to have_content @foundation.pledge_total
+      expect(page).to have_content Transaction.last.amount.round(4)
     end
+
+    click_on 'activity-link'
+    expect(page).to have_content "Ether Deposit"
+
   end
 
  # def tokens_are_distributed_to_funders

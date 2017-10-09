@@ -10,11 +10,11 @@
         .col.s12
           ul.tabs
             li.tab.col.s3
-              =link_to 'Funders', '#funders'
+              =link_to 'Funders', '#funders', id: 'funders-link'
             li.tab.col.s3
-              =link_to 'Projects', '#projects'
+              =link_to 'Projects', '#projects', id: 'projects-link'
             li.tab.col.s3
-              =link_to 'Activity', '#activity'
+              =link_to 'Activity', '#activity', id: 'activity-link'
         
         #funders.col.s12
           - if @foundation.pledges.any?
@@ -32,7 +32,20 @@
           p No projects yet.
 
         #activity.col.s12
-          p No activity yet.
+          - if @foundation.eth_transactions.any?
+            ul.collection
+              - @foundation.eth_transactions.each do |t|
+                li.collection-item.avatar
+                  i.material-icons.circle.pink 
+                  strong.title
+                    span> Ether
+                    span= t.amount > 0 ? "Deposit" : "Withdrawal"
+                  p.muted
+                    = "#{t.id}"
+                    br
+                    = "#{t.amount.round(9)} on #{t.created_at.strftime('%e %B, %Y')} | "
+          - else
+            p No activity yet.
 
     #stats.col.s12.m5.l4
       

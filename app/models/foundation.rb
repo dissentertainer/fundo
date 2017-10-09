@@ -5,6 +5,7 @@ class Foundation < ApplicationRecord
 
   has_many :pledges
   has_many :payments
+  has_many :eth_transactions
   has_many :users, -> { distinct }, through: :pledges
 
   validates :country_alpha2, presence: true
@@ -29,8 +30,11 @@ class Foundation < ApplicationRecord
     if !active? && thresholds_met?
       self.update(activated_on: Time.now)
       PaymentService.new(self).process_monthly
-      # TokenService.new(self).distribute_initial
     end
+  end
+
+  def balance
+    eth_transactions.sum(:amount).round(4)
   end
 
   def deploy
