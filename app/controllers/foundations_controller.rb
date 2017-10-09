@@ -1,6 +1,10 @@
 class FoundationsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @foundations = Foundation.all
+  end
+
   def new
     country = get_user_country
     @user_country_code = country.alpha2
@@ -19,7 +23,6 @@ class FoundationsController < ApplicationController
 
   def show
     @foundation = Foundation.includes(:users).where(id: params[:id]).first
-    @decorated_foundation = FoundationDecorator.new(@foundation)
   end
 
   private

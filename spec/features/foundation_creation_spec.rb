@@ -43,7 +43,7 @@ feature 'In order to hold community funds securely' do
     expect(page).to have_content 'Initial Pledge'
     expect(page).to have_field('pledge_foundation', disabled: true)
     expect(page).to have_field('pledge_currency', disabled: true)
-    expect(page).to have_field('pledge_currency', disabled: true)
+    expect(page).to have_field('initial_gas', disabled: true)
   end
 
   def the_donor_submits_the_initial_foundation_pledge

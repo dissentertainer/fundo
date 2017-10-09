@@ -1,0 +1,28 @@
+.row
+  .col.s12
+    h4 Join a foundation
+
+    p.flow-text
+      | Community philanthropy is important for developing civil society and making the world
+        around you better. Join a foundation today and start contributing to projects in your neighborhood.
+    p.flow-text Don't see your neighborhood?
+    = link_to new_foundation_path, class: 'btn btn-large', id: 'create-foundation'
+      i.material-icons.left add_circle_outline
+      | Create foundation
+
+.row
+  .col.s12
+    h4 Current foundations
+    - if @foundations.any?
+
+      ul.collection
+        - @foundations.each do |foundation|
+          li.collection-item.avatar
+            i.material-icons.circle.pink place
+            strong= link_to foundation.name, foundation_path(foundation)
+            p.muted
+              span= "#{foundation.status} | "
+              span= "#{foundation.users.count} funders | "
+              span= "#{currency(foundation.pledge_total)} #{foundation.local_currency} per month pledged"
+    - else
+      p No foundations yet :(

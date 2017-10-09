@@ -3,25 +3,25 @@ class PledgesController < ApplicationController
 
   def new
     @foundation = Foundation.find(params[:id])
-    @decorated_foundation = FoundationDecorator.new(@foundation)
     @pledge = Pledge.new
   end
 
   def create
-    @decorated_foundation = FoundationDecorator.new(Foundation.find(params[:id]))
+    @foundation = Foundation.find(params[:id])
     @pledge = Pledge.new(
                 amount: params[:amount],
                 foundation_id: params[:id],
                 user_id: current_user.id,
-                currency: @decorated_foundation.foundation.local_currency
+                currency: @foundation.local_currency
               )
 
     if @pledge.save
-      if @pledge.foundation.deploy
-        flash[:success] = "Congratulations! Your foundation was deployed to the Ethereum blockchain. "
+      if @foundation.deploy
+        flash[:success] = "Congratulations! Your pledge was created and the foundation was deployed to the Ethereum blockchain. "
       end
 
-      flash[:success] << "Your pledge has been created."
+      flash[:success] = "Your pledge has been created!"
+      @foundation.activate
       redirect_to pledge_path(@pledge)
     end
 
@@ -29,7 +29,6 @@ class PledgesController < ApplicationController
 
   def show
     @decorated_pledge = PledgeDecorator.new(Pledge.find(params[:id]))
-    @decorated_foundation = FoundationDecorator.new(@decorated_pledge.pledge.foundation)
   end
 
   def cancel

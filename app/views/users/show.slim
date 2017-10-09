@@ -1,0 +1,40 @@
+.row
+  .col.s12.m4.offset-m4
+    .avatar.center
+      i.material-icons.circle.pink.large.white-text face
+.row
+  .col.s12
+    h4.center= current_user.full_name
+
+.row
+  #tabs.col.s12
+    .row
+      .col.s12
+        ul.tabs
+          li.tab.col.s3
+            =link_to 'My Info', '#info', id: 'info-link'
+          li.tab.col.s3
+            =link_to 'Pledges', '#pledges', id: 'pledges-link'
+          li.tab.col.s3
+            =link_to 'Transactions', '#transactions', id: 'transactions-link'
+      
+        #info.col.s12
+          p User info goes here
+
+        #pledges.col.s12
+          - if @pledges.any?
+            ul.collection
+              - @pledges.each do |pledge|
+                li.collection-item.avatar
+                  i.material-icons.circle.pink favorite
+                  strong= link_to pledge.foundation.name, pledge_path(pledge)
+                  p.muted
+                    span= "#{currency(pledge.amount)} per month | "
+                    span= "Pledge created on #{pledge.created_at.strftime('%e %B, %Y')}"
+          - else
+            p No pledges yet.
+            = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
+              span Join foundation
+
+        #transactions.col.s12
+          p No transactions yet.
