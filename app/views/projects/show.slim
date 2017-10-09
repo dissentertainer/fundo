@@ -1,0 +1,61 @@
+.row
+  .col.s12
+    h3= @project.title
+    p.help-text
+      span> A project for 
+      =link_to @project.foundation.name, foundation_path(@project.foundation)
+    .row
+      #tabs.col.s12.m7.l8
+        .row
+          .col.s12
+            ul.tabs
+              li.tab.col.s3
+                =link_to 'Details', '#details', id: 'details-link'
+              li.tab.col.s3
+                =link_to 'Funders', '#funders', id: 'funders-link'
+              li.tab.col.s3
+                =link_to 'Activity', '#activity', id: 'activity-link'
+
+          #details.col.s12
+            .row
+              .col.s12
+                h6 Project Owner
+                p= @project.project_owner.full_name
+            .row
+              .col.s12.m6
+                h6 Start Date
+                p= @project.start_date.strftime('%e %B, %Y')
+
+              .col.s12.m6
+                h6 End Date
+                p= @project.end_date.strftime('%e %B, %Y')
+
+            .row
+              .col.s12
+                h6 Description
+                p= @project.short_description
+
+                p= @project.full_description
+
+          #funders.col.s12
+            p No funders yet :(
+
+          #activity.col.s12
+            p No activity yet :(
+
+      #stats.col.s12.m5.l4
+        
+        .col.s12
+          = button_tag class: 'btn btn-large'
+            i.material-icons.left favorite_border
+            | Send tokens
+        .col.s12
+          #status.card
+            .card-content
+              span.card-title Status
+              h4 Active
+        .col.s12
+          #goal.card
+            .card-content
+              span.card-title Funding Goal
+              h4= "#{currency(@project.funding_goal)} #{@project.foundation.local_currency}"

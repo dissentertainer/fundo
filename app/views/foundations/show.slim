@@ -1,90 +1,107 @@
 = tag.div nil, id:'map', class: 'col s12 m8 foundation-map', data: { location: @foundation }
-.foundation-container
-  h3= @foundation.name
-  p.help-text
-    span> Ethereum blockchain address:
-    span= @foundation.address
-  .row
-    #tabs.col.s12.m7.l8
+.row
+  .col.s12
+    .foundation-container
+      h3= @foundation.name
+      p.help-text
+        span> Ethereum blockchain address:
+        span= @foundation.address
       .row
-        .col.s12
-          ul.tabs
-            li.tab.col.s3
-              =link_to 'Funders', '#funders', id: 'funders-link'
-            li.tab.col.s3
-              =link_to 'Projects', '#projects', id: 'projects-link'
-            li.tab.col.s3
-              =link_to 'Activity', '#activity', id: 'activity-link'
-        
-        #funders.col.s12
-          - if @foundation.pledges.any?
-            ul.collection
-              - @foundation.pledges.each do |pledge|
-                li.collection-item.avatar
-                  i.material-icons.circle.pink face
-                  strong.title= pledge.user.full_name
-                  p= "Joined on #{pledge.created_at.strftime('%e %B, %Y')}"
-                  
-          - else
-            p No contributors yet.
+        #tabs.col.s12.m7.l8
+          .row
+            .col.s12
+              ul.tabs
+                li.tab.col.s3
+                  =link_to 'Funders', '#funders', id: 'funders-link'
+                li.tab.col.s3
+                  =link_to 'Projects', '#projects', id: 'projects-link'
+                li.tab.col.s3
+                  =link_to 'Activity', '#activity', id: 'activity-link'
 
-        #projects.col.s12
-          p No projects yet.
+            #funders.col.s12
+              - if @foundation.pledges.any?
+                ul.collection
+                  - @foundation.pledges.each do |pledge|
+                    li.collection-item.avatar
+                      i.material-icons.circle.pink face
+                      strong.title= pledge.user.full_name
+                      p= "Joined on #{pledge.created_at.strftime('%e %B, %Y')}"
+                      
+              - else
+                p No contributors yet :(
 
-        #activity.col.s12
-          - if @foundation.eth_transactions.any?
-            ul.collection
-              - @foundation.eth_transactions.each do |t|
-                li.collection-item.avatar
-                  i.material-icons.circle.pink flash_on
-                  strong.title
-                    span> Ether
-                    span= t.amount > 0 ? "Deposit" : "Withdrawal"
-                  p.muted
-                    = "#{t.id}"
-                    br
-                    = "#{t.amount.round(9)} on #{t.created_at.strftime('%e %B, %Y')} | "
-          - else
-            p No activity yet.
+            #projects.col.s12
+              - if @foundation.projects.any?
+                .row
+                  - @foundation.projects.each do |project|
+                    .col.s12.m6
+                      .card.pink
+                        .card-content.white-text
+                          span.card-title= project.title
+                          p= project.short_description
+                        .card-action
+                          =link_to 'More info', project_path(project)
 
-    #stats.col.s12.m5.l4
-      
-      - if !@foundation.users.include?(current_user)
-        .col.s12
-          = link_to new_pledge_path(@foundation), class: 'btn btn-large', id: 'new-pledge-link'
-            i.material-icons.left favorite_border
-            | Join foundation
-      .col.s12
-        #status.card
-          .card-content
-            span.card-title Status
-            h4= @foundation.status
-            - if @foundation.active?
-              p.help-text= "Foundation activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>.".html_safe
-            - else
-              p.help-text= "Foundation will activate on <strong>#{@foundation.activation_deadline.strftime('%e %B, %Y')}</strong> if the funding and participation thresholds are met.".html_safe
+              - else
+                p No projects yet :(
+              = link_to new_project_path, class: 'btn btn-large', id: 'create-foundation'
+                i.material-icons.left add_circle_outline
+                | Create project
 
-      .col.s12
-        #balance.card
-          .card-content
-            span.card-title Balance
-            h4= @foundation.balance
-            p.help-text Funds are held in Ether (ETH). Current exchange rate is $304.59 USD/ETH
-      .col.s12
-        #funders-total.card
-          .card-content
-            span.card-title Funders
-            h4= @foundation.users.size
-            - if @foundation.active?
-              p.help-text= "#{@foundation.users.size} people are supporting this foundation"
-            -else
-              p.help-text= "#{@foundation.min_participants} funders required in order to activate"
-      .col.s12
-        .card
-          #pledges-total.card-content
-            span.card-title Total Pledges
-            h4= "#{currency(@foundation.pledge_total)} #{@foundation.local_currency}"
-            - if @foundation.active?
-              p.help-text Total amount contributed per month from all funders.
-            - else
-              p.help-text= "#{number_with_precision(@foundation.min_starting_funds, delimiter: ",", precision: 2)} #{@foundation.local_currency} required in order to activate"
+            #activity.col.s12
+              - if @foundation.eth_transactions.any?
+                ul.collection
+                  - @foundation.eth_transactions.each do |t|
+                    li.collection-item.avatar
+                      i.material-icons.circle.pink flash_on
+                      strong.title
+                        span> Ether
+                        span= t.amount > 0 ? "Deposit" : "Withdrawal"
+                      p.muted
+                        = "#{t.id}"
+                        br
+                        = "#{t.amount.round(9)} on #{t.created_at.strftime('%e %B, %Y')} | "
+              - else
+                p No activity yet :(
+
+        #stats.col.s12.m5.l4
+          
+          - if !@foundation.users.include?(current_user)
+            .col.s12
+              = link_to new_pledge_path(@foundation), class: 'btn btn-large', id: 'new-pledge-link'
+                i.material-icons.left favorite_border
+                | Join foundation
+          .col.s12
+            #status.card
+              .card-content
+                span.card-title Status
+                h4= @foundation.status
+                - if @foundation.active?
+                  p.help-text= "Foundation activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>.".html_safe
+                - else
+                  p.help-text= "Foundation will activate on <strong>#{@foundation.activation_deadline.strftime('%e %B, %Y')}</strong> if the funding and participation thresholds are met.".html_safe
+
+          .col.s12
+            #balance.card
+              .card-content
+                span.card-title Balance
+                h4= @foundation.balance
+                p.help-text Funds are held in Ether (ETH). Current exchange rate is $304.59 USD/ETH
+          .col.s12
+            #funders-total.card
+              .card-content
+                span.card-title Funders
+                h4= @foundation.users.size
+                - if @foundation.active?
+                  p.help-text= "#{@foundation.users.size} people are supporting this foundation"
+                -else
+                  p.help-text= "#{@foundation.min_participants} funders required in order to activate"
+          .col.s12
+            .card
+              #pledges-total.card-content
+                span.card-title Total Pledges
+                h4= "#{currency(@foundation.pledge_total)} #{@foundation.local_currency}"
+                - if @foundation.active?
+                  p.help-text Total amount contributed per month from all funders.
+                - else
+                  p.help-text= "#{number_with_precision(@foundation.min_starting_funds, delimiter: ",", precision: 2)} #{@foundation.local_currency} required in order to activate"

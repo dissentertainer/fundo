@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :pledges
   has_many :foundation, -> { distinct }, through: :pledges
   has_many :wallets, as: :walletable
+  has_many :projects
 
   default_scope -> { order("created_at ASC") }
 

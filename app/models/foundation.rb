@@ -3,6 +3,7 @@ class Foundation < ApplicationRecord
   after_validation :geocode
   before_create :set_locality
 
+  has_many :projects
   has_many :pledges
   has_many :payments
   has_many :eth_transactions

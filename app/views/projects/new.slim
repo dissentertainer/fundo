@@ -1,0 +1,65 @@
+.row
+  .col.s12
+    h4 New Project
+.row
+  .col.s12.m6
+    p 
+      | Projects proposers are eligible to receive tokens that can be redeemed from the community
+        fund for money the help complete the project.
+        
+    h6 What makes a good project?
+    p
+      | A good project has clear goals, reasonable funding requirements, and an achievable timeline. Most importantly, it's something that
+        will make your neighbor's lives better by improving the community where you live.
+
+    h6 How can I get tokens?
+    p
+      | Some funders may send you tokens here on the platform, but you can also just ask around. Remember, the people that fund this foundation are your neighbors!
+      
+  .col.s12.m6
+    = form_with model: @project, id: 'new-project' do |f|
+      .row
+        .col.s12
+          h6 Project details
+          .form-input
+            = f.label :foundation, 'Foundation'
+            = f.text_field :foundation, id: :project_foundation, value: @foundation.name, disabled: true 
+          
+          .form-input
+            = f.label :currency, 'Foundation local currency'
+            = f.text_field :currency, id: :project_currency, value: @foundation.local_currency, disabled: true
+
+          .form-input
+            = f.label :funding_goal
+            = f.text_field :funding_goal, id: :project_funding_goal
+            p.help-text How much money do you need to complete this project?
+
+          .form-input
+            = f.label :title, 'Project title'
+            = f.text_field :title, id: :project_title
+
+          .form-input
+            = f.label :short_description, 'Short description'
+            = f.text_field :short_description, id: :project_short_description
+            p.help-text This is the first thing funders will see about your project. Keep it short and sweet.
+
+          .form-input
+            = f.label :full_description, 'Full description'
+            = f.text_field :full_description, id: :full_description
+            p.help-text Describe in more detail what you will do to accomplish the project
+
+          .form-input
+            = f.label :start_date, 'Start date'
+            = f.text_field :start_date, id: :project_start_date, class: 'datepicker'
+            p.help-text When will you start working on this? You will not be able to redeem funds before this date.
+
+          .form-input
+            = f.label :end_date, 'End date'
+            = f.text_field :end_date, id: :project_end_date, class: 'datepicker'
+            p.help-text When will you complete this?
+
+
+      .row
+        .col.s12
+          = button_tag 'Create project', class: 'btn btn-large', id: 'create-project', data: { disable_with: "Creating..."}
+      

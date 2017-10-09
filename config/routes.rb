@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   resources :foundations, only: [:new, :create, :show, :index] do
     member do
       resources :pledges, only: [:new, :create, :cancel]
+      resources :projects, only: [:new, :create, :show]
     end
   end
-
 
   resources :pledges, only: [:show]
 end
