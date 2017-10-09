@@ -1,4 +1,6 @@
 class PledgesController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @foundation = Foundation.find(params[:id])
     @decorated_foundation = FoundationDecorator.new(@foundation)
@@ -16,9 +18,9 @@ class PledgesController < ApplicationController
 
     if @pledge.save
       if @pledge.foundation.deploy
-        flash[:success] = "Congratulations! Your foundation was deployed to the Ethereum blockchain."
+        flash[:success] = "Congratulations! Your foundation was deployed to the Ethereum blockchain. "
       end
-      
+
       flash[:success] << "Your pledge has been created."
       redirect_to pledge_path(@pledge)
     end
