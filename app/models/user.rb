@@ -6,6 +6,12 @@ class User < ApplicationRecord
 
   has_many :pledges
   has_many :foundation, -> { distinct }, through: :pledges
+  has_many :wallets, as: :walletable
 
   default_scope -> { order("created_at ASC") }
+
+  def token_balance(foundation)
+    binding.pry
+    received_token_transactions.sum(:amount) - sent_token_transactions.sum(:amount)
+  end
 end

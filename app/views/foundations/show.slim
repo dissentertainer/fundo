@@ -36,7 +36,7 @@
             ul.collection
               - @foundation.eth_transactions.each do |t|
                 li.collection-item.avatar
-                  i.material-icons.circle.pink 
+                  i.material-icons.circle.pink flash_on
                   strong.title
                     span> Ether
                     span= t.amount > 0 ? "Deposit" : "Withdrawal"
@@ -51,7 +51,7 @@
       
       - if !@foundation.users.include?(current_user)
         .col.s12
-          = link_to new_pledge_path(@foundation), class: 'btn btn-large', id: 'new-pledge'
+          = link_to new_pledge_path(@foundation), class: 'btn btn-large', id: 'new-pledge-link'
             i.material-icons.left favorite_border
             | Join foundation
       .col.s12
@@ -60,7 +60,7 @@
             span.card-title Status
             h4= @foundation.status
             - if @foundation.active?
-              p.help-text= "Foundation activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>."
+              p.help-text= "Foundation activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>.".html_safe
             - else
               p.help-text= "Foundation will activate on <strong>#{@foundation.activation_deadline.strftime('%e %B, %Y')}</strong> if the funding and participation thresholds are met.".html_safe
 
@@ -69,15 +69,22 @@
           .card-content
             span.card-title Balance
             h4= @foundation.balance
+            p.help-text Funds are held in Ether (ETH). Current exchange rate is $304.59 USD/ETH
       .col.s12
         #funders-total.card
           .card-content
             span.card-title Funders
             h4= @foundation.users.size
-            p.help-text= "#{@foundation.min_participants} funders required in order to activate"
+            - if @foundation.active?
+              p.help-text= "#{@foundation.users.size} people are supporting this foundation"
+            -else
+              p.help-text= "#{@foundation.min_participants} funders required in order to activate"
       .col.s12
         .card
           #pledges-total.card-content
             span.card-title Total Pledges
             h4= "#{currency(@foundation.pledge_total)} #{@foundation.local_currency}"
-            p.help-text= "#{number_with_precision(@foundation.min_starting_funds, delimiter: ",", precision: 2)} #{@foundation.local_currency} required in order to activate"
+            - if @foundation.active?
+              p.help-text Total amount contributed per month from all funders.
+            - else
+              p.help-text= "#{number_with_precision(@foundation.min_starting_funds, delimiter: ",", precision: 2)} #{@foundation.local_currency} required in order to activate"

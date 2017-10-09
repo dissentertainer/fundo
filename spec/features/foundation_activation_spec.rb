@@ -36,7 +36,7 @@ feature 'In order to activate a foundation' do
     end
 
     click_on "Community Foundation of #{@foundation.locality_name} (#{@foundation.postal_code})"
-    click_on 'new-pledge'
+    click_on 'new-pledge-link'
 
     expect(page).not_to have_content 'Initial Pledge'
     expect(page).not_to have_field('initial_gas', disabled: true)
@@ -55,7 +55,7 @@ feature 'In order to activate a foundation' do
       expect(page).to have_content "activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>."
     end
     within('#balance') do
-      expect(page).to have_content Transaction.last.amount.round(4)
+      expect(page).to have_content @foundation.eth_transactions.sum(:amount).round(4)
     end
 
     click_on 'activity-link'
@@ -63,10 +63,17 @@ feature 'In order to activate a foundation' do
 
   end
 
- # def tokens_are_distributed_to_funders
- #   within('#navbar') do
- #     expect(page).to have_content "Token balance: 30"
- #   end
- # end
+  def tokens_are_distributed_to_funders
+    within('#nav-mobile') do
+      click_on 'user-menu-toggle'
+    end
+
+    click_on 'My profile'
+    click_on 'wallets-link'
+
+    within('#wallets') do
+      expect(page).to have_content @user.wallets.last.balance
+    end
+  end
 end
 
