@@ -1,67 +1,69 @@
-.section.hero
-  .row
-    .col.s10.offset-s1.center
-      h2 
-        span.heavy> Love
-        span.light> the place you
-        span.heavy live.
-      p.flow-text Create a community foundation to support the projects and people doing good things in your neighborhood.
-      
-  .scroller-link
-    h6.center
-      = link_to '#how-it-works'
-        span Learn more
-        br
-        i.material-icons.medium keyboard_arrow_down
+.row
+  .col.s12
+    .section.hero
+      .row
+        .col.s10.offset-s1.center
+          h2 
+            span.heavy> Love
+            span.light> the place you
+            span.heavy live.
+          p.flow-text Create a community foundation to support the projects and people doing good things in your neighborhood.
+          
+      .scroller-link
+        h6.center
+          = link_to '#how-it-works'
+            span Learn more
+            br
+            i.material-icons.medium keyboard_arrow_down
 
-#how-it-works.section.scrollspy
-  .row
-    .col.s12
-      h3 How it works
-      p.flow-text Community foundations are designed to pool donations into a coordinated investment fund dedicated to the social improvement of a defined local geographic area.
+    #how-it-works.section.scrollspy
+      .row
+        .col.s12
+          h3 How it works
+          p.flow-text Community foundations are designed to pool donations into a coordinated investment fund dedicated to the social improvement of a defined local geographic area.
 
-      p.flow-text With Fundo, you can easily setup a new community foundation for your neighborhood, town, school or community of practice.
-  .row
-    .col.s12.m8.offset-m2.card-panel
-      .col.s12.m2.center
-        i.material-icons.center.medium.panel-icon account_balance
-      .col.s12.m10
-        h6 New Foundation Proposed
-        p You choose the rules, geographical and thematic limitation of your community foundation.
-    .col.s12.m8.offset-m2.card-panel
-      .col.s12.m2.center
-        i.material-icons.center.medium.panel-icon verified_user
-      .col.s12.m10
-        h6 Foundation Activated
-        p After passing a threshold of community member support and commitments of pledges, the community foundation is activated and starts accumulating funds.
-    .col.s12.m8.offset-m2.card-panel
-      .col.s12.m2.center
-        i.material-icons.center.medium.panel-icon loyalty
-      .col.s12.m10
-        h6 Tokens Issued to Donors
-        p Each contribution generates an equivalent quantity of foundation tokens to the donor. This is a way for the Community Foundation to say “thank you” and and to contributors a voice in how funds are allocated.
-    .col.s12.m8.offset-m2.card-panel
-      .col.s12.m2.center
-        i.material-icons.center.medium.panel-icon thumb_up
-      .col.s12.m10
-        h6 Tokens Circulate in the Community
-        p Tokens can be used locally, as a complementary currency, generating income and strengthening the economy. To local businesses, it is a way to appreciate people who have supported the community.
-    .col.s12.m8.offset-m2.card-panel
-      .col.s12.m2.center
-        i.material-icons.center.medium.panel-icon mood
-      .col.s12.m10
-        h6 Tokens Redeemed for Project Funding
-        p Tokens are also used as a collective decision making mechanism. By sending a token to a specific project, community funds are unlocked and allocated in this project. 
+          p.flow-text With Fundo, you can easily setup a new community foundation for your neighborhood, town, school or community of practice.
+      .row
+        .col.s12.m8.offset-m2.card-panel
+          .col.s12.m2.center
+            i.material-icons.center.medium.panel-icon account_balance
+          .col.s12.m10
+            h6 New Foundation Proposed
+            p You choose the rules, geographical and thematic limitation of your community foundation.
+        .col.s12.m8.offset-m2.card-panel
+          .col.s12.m2.center
+            i.material-icons.center.medium.panel-icon verified_user
+          .col.s12.m10
+            h6 Foundation Activated
+            p After passing a threshold of community member support and commitments of pledges, the community foundation is activated and starts accumulating funds.
+        .col.s12.m8.offset-m2.card-panel
+          .col.s12.m2.center
+            i.material-icons.center.medium.panel-icon loyalty
+          .col.s12.m10
+            h6 Tokens Issued to Donors
+            p Each contribution generates an equivalent quantity of foundation tokens to the donor. This is a way for the Community Foundation to say “thank you” and and to contributors a voice in how funds are allocated.
+        .col.s12.m8.offset-m2.card-panel
+          .col.s12.m2.center
+            i.material-icons.center.medium.panel-icon thumb_up
+          .col.s12.m10
+            h6 Tokens Circulate in the Community
+            p Tokens can be used locally, as a complementary currency, generating income and strengthening the economy. To local businesses, it is a way to appreciate people who have supported the community.
+        .col.s12.m8.offset-m2.card-panel
+          .col.s12.m2.center
+            i.material-icons.center.medium.panel-icon mood
+          .col.s12.m10
+            h6 Tokens Redeemed for Project Funding
+            p Tokens are also used as a collective decision making mechanism. By sending a token to a specific project, community funds are unlocked and allocated in this project. 
 
-  .row
-    .col.s12.center
-      = link_to new_foundation_path, class: 'btn btn-large', id: 'create-foundation'
-        i.material-icons.left add_circle_outline
-        | Create foundation
-  .row
-    .col.s12.center
-      = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
-        i.material-icons.left favorite_border
-        | Join foundation
+      .row
+        .col.s12.center
+          = link_to new_foundation_path, class: 'btn btn-large', id: 'create-foundation'
+            i.material-icons.left add_circle_outline
+            | Create foundation
+      .row
+        .col.s12.center
+          = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
+            i.material-icons.left favorite_border
+            | Join foundation
 = tag.div nil, id:'map', class: 'section home-page', data: { location: @location.data.to_json }
 #map-overlay
