@@ -30,6 +30,7 @@ gem 'validates_zipcode'
 gem 'redis', '~> 3.0.4'
 gem 'redis-namespace', '~> 1.3.2'
 gem 'devise'
+gem 'httparty'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -38,7 +39,6 @@ group :development, :test do
   gem 'awesome_print'
   gem 'dotenv-rails'
   gem 'fuubar'
-  gem 'httparty'
   gem 'pry-byebug'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
