@@ -1,4 +1,5 @@
 class PaymentService
+  include HTTParty
   attr_reader :pledges
 
   def initialize(foundation)
