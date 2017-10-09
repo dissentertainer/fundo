@@ -52,7 +52,7 @@ feature 'In order to activate a foundation' do
     click_on 'view-foundation'
     within('#status') do
       expect(page).to have_content "Active"
-      expect(page).to have_content "activated on <strong>#{@foundation.activated_on.strftime('%e %B, %Y')}</strong>."
+      expect(page).to have_content "activated on #{@foundation.activated_on.strftime('%e %B, %Y')}."
     end
     within('#balance') do
       expect(page).to have_content @foundation.eth_transactions.sum(:amount).round(4)
