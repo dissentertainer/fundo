@@ -6,7 +6,9 @@ class Foundation < ApplicationRecord
   has_many :pledges
   has_many :payments
   has_many :eth_transactions
+  has_many :token_transactions
   has_many :users, -> { distinct }, through: :pledges
+  has_many :wallets, as: :walletable
 
   validates :country_alpha2, presence: true
   validates :local_currency, presence: true
@@ -29,6 +31,8 @@ class Foundation < ApplicationRecord
   def activate
     if !active? && thresholds_met?
       self.update(activated_on: Time.now)
+      Wallet.create(walletable: self, content_type: 'eth', foundation_id: id)
+      Wallet.create(walletable: self, content_type: 'token', foundation_id: id)
       PaymentService.new(self).process_monthly
     end
   end

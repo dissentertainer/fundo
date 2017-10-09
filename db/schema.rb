@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009094939) do
+ActiveRecord::Schema.define(version: 20171009121214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,12 @@ ActiveRecord::Schema.define(version: 20171009094939) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "sender_id"
+    t.uuid "recipient_id"
     t.index ["created_at"], name: "index_transactions_on_created_at"
     t.index ["foundation_id"], name: "index_transactions_on_foundation_id"
+    t.index ["recipient_id"], name: "index_transactions_on_recipient_id"
+    t.index ["sender_id"], name: "index_transactions_on_sender_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -85,6 +89,15 @@ ActiveRecord::Schema.define(version: 20171009094939) do
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "walletable_type"
+    t.uuid "walletable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "foundation_id"
+    t.string "content_type"
   end
 
   add_foreign_key "payments", "foundations"

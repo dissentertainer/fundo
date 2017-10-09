@@ -16,7 +16,7 @@
           li.tab.col.s3
             =link_to 'Pledges', '#pledges', id: 'pledges-link'
           li.tab.col.s3
-            =link_to 'Transactions', '#transactions', id: 'transactions-link'
+            =link_to 'Wallets', '#wallets', id: 'wallets-link'
       
         #info.col.s12
           p User info goes here
@@ -36,5 +36,16 @@
             = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
               span Join foundation
 
-        #transactions.col.s12
-          p No transactions yet.
+        #wallets.col.s12
+          - if @wallets.any?
+            ul.collection
+              - @wallets.each do |wallet|
+                li.collection-item.avatar
+                  i.material-icons.circle.pink lock
+                  strong= "#{Foundation.where(id: wallet.foundation_id).first.name}"
+                  p.muted
+                    span= "#{wallet.balance} foundation tokens"
+          - else
+            p No wallets yet.
+            = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
+              span Join foundation
