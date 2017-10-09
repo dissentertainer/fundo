@@ -1,0 +1,76 @@
+.row
+  .col.s12
+    - if @foundation.pledges.empty?
+      h4 Initial Pledge
+    - else
+      h4 New Pledge
+.row
+  .col.s12.m6
+    - if @foundation.pledges.empty?
+      p 
+        | As the foundation proposer you must make the first pledge and provide additional funds to serve as 
+          <strong>gas</strong> on the Ethereum network. Foundation funds are held in smart contracts on Ethereum and
+          gas is required for contracts to run. This initial gas charge also helps us prevent abuse of this system.
+
+    h6 How are funds held?
+    p
+      | Each foundation's funds are held securely and transparently in Ether in a smart contract wallet on the Ethereum blockchain.
+        Fundo does not have access to your funds.
+
+    h6 How are funds distributed to projects?
+    p
+      | Once the foundation activates, or if it is already active, all funders will receive <strong>Fundo tokens</strong> equal to the amount of your pledge.
+        When your pledge is processed each month the smart contract will issue you additional tokens. Tokens can then be distributed to 
+        project leaders, who can redeem them for funds from the foundation.
+    
+    h6 How often are pledges collected?
+    p
+      | To ensure solid cash flow for the foundation, pledges are collected monthly, converted to Ether and sent to the foundation's wallet. You can 
+        cancel your pledge at any time.
+
+    h6 What fees do you charge?
+    p
+      | Because Fundo takes advantage of the blockchain for storing funds we are able to drastically reduce overhead. However, to fund ongoing development
+        and maintenance of this platform we retain <strong>1% of contributions</strong> as our fee. This is redeemed from the foundation wallet monthly based on the prior month's collected
+        pledges.
+  
+  .col.s12.m6
+    = form_with url: pledges_path, id: 'new-pledge' do |f|
+      .row
+        .col.s12
+          h6 Pledge details
+          .form-input
+            = f.label :foundation, 'Foundation'
+            = f.text_field :foundation, id: :pledge_foundation, value: @decorated_foundation.name, disabled: true 
+          
+          .form-input
+            = f.label :currency, 'Foundation local currency'
+            = f.text_field :currency, id: :pledge_currency, value: @decorated_foundation.foundation.local_currency, disabled: true
+
+          - if @foundation.pledges.empty?
+            .form-input
+              = f.label :initial_gas, 'Initial gas'
+              = f.text_field :initial_gas, id: :initial_gas
+            .help-text A one-time charge to provide the foundation with funds to run on the Ethereum network.
+          
+          .form-input
+            = f.label :amount, 'Monthly pledge amount'
+            = f.text_field :amount, id: :pledge_amount
+          .help-text Pledges denominated in the local currency of the foundation are collected each month and sent to the foundation's wallet
+
+      .row
+        .col.s12
+          /* In a real version of the app, this would be replaced by Stripe or some other secure method of handling bank info */
+          h6 Payment method
+          .form-input
+            = f.label :bank_account, 'Bank account number'
+            = f.text_field :bank_account, id: :pledge_bank_account
+
+          .form-input
+            = f.label :bank_routing, 'Bank routing number'
+            = f.text_field :bank_routing, id: :pledge_bank_routing
+
+      .row
+        .col.s12
+          = button_tag 'Submit pledge', class: 'btn btn-large', id: 'submit-pledge', data: { disable_with: "Submitting..."}
+      

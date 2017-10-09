@@ -1,45 +1,55 @@
 = tag.div nil, id:'map', class: 'col s12 m8 foundation-map', data: { location: @foundation }
-h3= "Community Foundation of #{@foundation.locality_name} (#{@foundation.postal_code})"
-p.help-text
-  span> Ethereum blockchain address:
-  span= @foundation.address
-.row
-  #tabs.col.s12.m7.l8
-    .row
+.foundation-container
+  h3= @decorated_foundation.name
+  p.help-text
+    span> Ethereum blockchain address:
+    span= @foundation.address
+  .row
+    #tabs.col.s12.m7.l8
+      .row
+        .col.s12
+          ul.tabs
+            li.tab.col.s3
+              =link_to 'Funders', '#funders'
+            li.tab.col.s3
+              =link_to 'Projects', '#projects'
+            li.tab.col.s3
+              =link_to 'Activity', '#activity'
+        
+        #funders.col.s12
+          - if @foundation.pledges.any?
+            ul.collection
+              - @foundation.pledges.each do |pledge|
+                li.collection-item.avatar
+                  i.material-icons.circle.pink face
+                  strong.title= pledge.user.full_name
+                  p= "Joined on #{pledge.created_at.strftime('%e %B, %Y')}"
+                  
+          - else
+            p No contributors yet.
+
+        #projects.col.s12
+          p No projects yet.
+
+        #activity.col.s12
+          p No activity yet.
+
+    #stats.col.s12.m5.l4
       .col.s12
-        ul.tabs
-          li.tab.col.s3
-            =link_to 'Funders', '#funders'
-          li.tab.col.s3
-            =link_to 'Projects', '#projects'
-          li.tab.col.s3
-            =link_to 'Activity', '#activity'
-      
-      #funders.col.s12
-        p No contributors yet.
-
-      #projects.col.s12
-        p No projects yet.
-
-      #activity.col.s12
-        p No activity yet.
-
-  #stats.col.s12.m5.l4
-    .col.s12
-      .card
-        .card-content
-          span.card-title Status
-          h4 some status
-          p.help-text= "Foundation will activate on <strong>#{@foundation.activation_deadline.strftime('%e %B, %Y')}</strong> if the funding and participation thresholds are met.".html_safe
-    .col.s12
-      .card
-        .card-content
-          span.card-title Funders
-          h4 0
-          p.help-text= "#{@foundation.min_participants} funders required in order to activate"
-    .col.s12
-      .card
-        .card-content
-          span.card-title Total Pledges
-          h4= @foundation.local_currency
-          p.help-text= "#{@foundation.min_starting_funds} #{@foundation.local_currency} required in order to activate"
+        #status.card
+          .card-content
+            span.card-title Status
+            h4= @foundation.status
+            p.help-text= "Foundation will activate on <strong>#{@foundation.activation_deadline.strftime('%e %B, %Y')}</strong> if the funding and participation thresholds are met.".html_safe
+      .col.s12
+        #funders-total.card
+          .card-content
+            span.card-title Funders
+            h4= @foundation.users.size
+            p.help-text= "#{@foundation.min_participants} funders required in order to activate"
+      .col.s12
+        .card
+          #pledges-total.card-content
+            span.card-title Total Pledges
+            h4= "#{currency(@foundation.pledge_total)} #{@foundation.local_currency}"
+            p.help-text= "#{number_with_precision(@foundation.min_starting_funds, delimiter: ",", precision: 2)} #{@foundation.local_currency} required in order to activate"
