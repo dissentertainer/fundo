@@ -12,9 +12,12 @@ html
 
     .navbar-fixed
       ul#user-menu.dropdown-content
+        li= link_to user_profile_path
+          i.material-icons.left face
+          span My profile
         li= link_to destroy_user_session_path, method: :delete, id: 'sign-out'
           i.material-icons.left highlight_off
-          span< Sign out
+          span Sign out
       
       nav
         .nav-wrapper
@@ -28,7 +31,7 @@ html
                     li= link_to 'Sign Up', new_user_registration_path, id: 'sign-up', class: 'btn btn-small btn-inverted'
                     li= link_to 'Sign In', new_user_session_path, id: 'sign-in', class: 'btn btn-small btn-inverted'
                   - else
-                    li= link_to '#!', data: { activates: 'user-menu' }, class: 'dropdown-button'
+                    li= link_to '#!', data: { activates: 'user-menu', constrainwidth: 'false' }, id: 'user-menu-toggle', class: 'dropdown-button'
                       = current_user.full_name
                       i.material-icons.right arrow_drop_down
 

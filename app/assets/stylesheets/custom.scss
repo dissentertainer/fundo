@@ -12,6 +12,10 @@ body {
   @extend .grey-text, .text-darken-4;
 }
 
+.muted {
+  color: $muted-color;
+}
+
 /* COMPONENTS */
 .page {
   padding-top:60px;
@@ -85,6 +89,8 @@ body {
 .foundation-container {
   margin-top: 340px;
 }
+
+/* NAVIGATION */
 
 /* TYPOGRAPHY */
 

@@ -13,6 +13,10 @@ class PledgeDecorator
     end
   end
 
+  def active?
+    pledge.foundation.status == "Active"
+  end
+
   def is_initial_pledge?
     @pledge == @pledge.foundation.pledges.first
   end

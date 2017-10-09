@@ -41,22 +41,22 @@
           h6 Pledge details
           .form-input
             = f.label :foundation, 'Foundation'
-            = f.text_field :foundation, id: :pledge_foundation, value: @decorated_foundation.name, disabled: true 
+            = f.text_field :foundation, id: :pledge_foundation, value: @foundation.name, disabled: true 
           
           .form-input
             = f.label :currency, 'Foundation local currency'
-            = f.text_field :currency, id: :pledge_currency, value: @decorated_foundation.foundation.local_currency, disabled: true
+            = f.text_field :currency, id: :pledge_currency, value: @foundation.local_currency, disabled: true
 
           - if @foundation.pledges.empty?
             .form-input
               = f.label :initial_gas, 'Initial gas'
-              = f.text_field :initial_gas, id: :initial_gas
-            .help-text A one-time charge to provide the foundation with funds to run on the Ethereum network.
+              = f.text_field :initial_gas, id: :initial_gas, value: currency(Constants::INITIAL_GAS_USD), disabled: true
+              .help-text A one-time charge to provide the foundation with funds to run on the Ethereum network.
           
           .form-input
             = f.label :amount, 'Monthly pledge amount'
             = f.text_field :amount, id: :pledge_amount
-          .help-text Pledges denominated in the local currency of the foundation are collected each month and sent to the foundation's wallet
+            .help-text Pledges denominated in the local currency of the foundation are collected each month and sent to the foundation's wallet
 
       .row
         .col.s12

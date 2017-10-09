@@ -5,7 +5,4 @@ class FoundationDecorator
     @foundation = foundation
   end
 
-  def name
-    "Community Foundation of #{foundation.locality_name} (#{foundation.postal_code})"
-  end
 end

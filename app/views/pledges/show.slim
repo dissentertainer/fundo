@@ -1,49 +1,52 @@
 .row
-  .col.s12
+  .col.s12.m6
     - if @decorated_pledge.is_initial_pledge?
       h4 Initial Pledge
     - else
       h4 Pledge
+    span.muted= "ID: #{@decorated_pledge.pledge.id}"
 .row
-  .col.s12
+  .col.s12.m6
     p 
+      - if @decorated_pledge.active?
+        strong> This foundation is currently active.
       | Your pledge will be processed monthly on the 15th of the month.
 
     h6 Funder
     p= current_user.full_name
   
     h6 Foundation
-    p= @decorated_foundation.name
+    p= @decorated_pledge.pledge.foundation.name
     
     table
       thead
         th
           h6 Pledge details
-        th
-          h6
+        th.right
+          h6= @decorated_pledge.pledge.currency
       tbody
         - if @decorated_pledge.is_initial_pledge?
           tr#initial-gas
             td
               span Inital gas fee (one-time charge)
-            td
-              span= "#{@decorated_pledge.pledge.currency} #{currency(Constants::INITIAL_GAS_USD)}"
+            td.right
+              span= "#{currency(Constants::INITIAL_GAS_USD)}"
         tr#pledge-amount
           td
             span Monthly pledge
-          td
-            span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.pledge.amount)}"
+          td.right
+            span= "#{currency(@decorated_pledge.pledge.amount)}"
         - if @decorated_pledge.is_initial_pledge?
           tr#activation-amount
             td
               strong Total charged upon foundation activation
+            td.right
+              span= "#{currency(@decorated_pledge.total)}"
+          tr#monthly-amount
             td
-              span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.total)}"
-        tr#monthly-amount
-          td
-            strong Total charged each month
-          td
-            span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.pledge.amount)}"
+              strong Total charged each month
+            td.right
+              span= "#{currency(@decorated_pledge.pledge.amount)}"
 
     
 .row

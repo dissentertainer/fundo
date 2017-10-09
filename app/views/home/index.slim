@@ -53,8 +53,13 @@
 
   .row
     .col.s12.center
-      = link_to new_foundation_path, class: 'btn-large', id: 'create-foundation'
+      = link_to new_foundation_path, class: 'btn btn-large', id: 'create-foundation'
         i.material-icons.left add_circle_outline
         | Create foundation
+  .row
+    .col.s12.center
+      = link_to foundations_path, class: 'btn btn-large', id: 'join-foundation'
+        i.material-icons.left favorite_border
+        | Join foundation
 = tag.div nil, id:'map', class: 'section home-page', data: { location: @location.data.to_json }
 #map-overlay

@@ -4,6 +4,7 @@ class Foundation < ApplicationRecord
   before_create :set_locality
 
   has_many :pledges
+  has_many :payments
   has_many :users, -> { distinct }, through: :pledges
 
   validates :country_alpha2, presence: true
@@ -20,8 +21,24 @@ class Foundation < ApplicationRecord
     [postal_code, country_alpha2].join(' ')
   end
 
+  def active?
+    activated_on.present?
+  end
+
+  def activate
+    if !active? && thresholds_met?
+      self.update(activated_on: Time.now)
+      PaymentService.new(self).process_monthly
+      # TokenService.new(self).distribute_initial
+    end
+  end
+
   def deploy
     EthereumService.new(self).deploy_contract
+  end
+
+  def name
+    "Community Foundation of #{locality_name} (#{postal_code})"
   end
 
   def pledge_total
