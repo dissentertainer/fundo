@@ -11,15 +11,15 @@ class FoundationsController < ApplicationController
   def create
     @foundation = Foundation.new(foundation_params)
     if @foundation.save
-      flash[:success] = "Congratulations! Your foundation was deployed to the Ethereum blockchain."
-      redirect_to foundation_path(@foundation)
+      redirect_to new_pledge_path(@foundation.id)
     else
       render :new
     end
   end
 
   def show
-    @foundation = Foundation.find(params[:id])
+    @foundation = Foundation.includes(:users).where(id: params[:id]).first
+    @decorated_foundation = FoundationDecorator.new(@foundation)
   end
 
   private

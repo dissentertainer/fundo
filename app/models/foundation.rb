@@ -2,7 +2,9 @@ class Foundation < ApplicationRecord
   geocoded_by :postal_code_and_country
   after_validation :geocode
   before_create :set_locality
-  after_create :deploy
+
+  has_many :pledges
+  has_many :users, -> { distinct }, through: :pledges
 
   validates :country_alpha2, presence: true
   validates :local_currency, presence: true
@@ -18,6 +20,24 @@ class Foundation < ApplicationRecord
     [postal_code, country_alpha2].join(' ')
   end
 
+  def deploy
+    EthereumService.new(self).deploy_contract
+  end
+
+  def pledge_total
+    pledges.sum(:amount).to_f
+  end
+
+  def status
+    if activated_on.nil? && !thresholds_met? && activation_deadline <= Date.today
+      "Expired"
+    elsif activated_on.present?
+      "Active"
+    else
+      "Pending"
+    end
+  end
+
   private
 
   def activation_deadline_must_be_in_future
@@ -26,8 +46,16 @@ class Foundation < ApplicationRecord
     end
   end
 
-  def deploy
-    self.address = EthereumService.new(self).deploy_contract
+  def thresholds_met?
+    funding_threshold_met? && participant_threshold_met?
+  end
+
+  def funding_threshold_met?
+    pledge_total >= min_starting_funds
+  end
+
+  def participant_threshold_met?
+    users.size >= min_participants
   end
 
   def set_locality

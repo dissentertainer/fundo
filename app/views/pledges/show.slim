@@ -1,0 +1,54 @@
+.row
+  .col.s12
+    - if @decorated_pledge.is_initial_pledge?
+      h4 Initial Pledge
+    - else
+      h4 Pledge
+.row
+  .col.s12
+    p 
+      | Your pledge will be processed monthly on the 15th of the month.
+
+    h6 Funder
+    p= current_user.full_name
+  
+    h6 Foundation
+    p= @decorated_foundation.name
+    
+    table
+      thead
+        th
+          h6 Pledge details
+        th
+          h6
+      tbody
+        - if @decorated_pledge.is_initial_pledge?
+          tr#initial-gas
+            td
+              span Inital gas fee (one-time charge)
+            td
+              span= "#{@decorated_pledge.pledge.currency} #{currency(Constants::INITIAL_GAS_USD)}"
+        tr#pledge-amount
+          td
+            span Monthly pledge
+          td
+            span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.pledge.amount)}"
+        - if @decorated_pledge.is_initial_pledge?
+          tr#activation-amount
+            td
+              strong Total charged upon foundation activation
+            td
+              span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.total)}"
+        tr#monthly-amount
+          td
+            strong Total charged each month
+          td
+            span= "#{@decorated_pledge.pledge.currency} #{currency(@decorated_pledge.pledge.amount)}"
+
+    
+.row
+  .col.s12
+    = link_to foundation_path(@decorated_pledge.pledge.foundation_id), class: 'btn btn-large', id: 'view-foundation'
+      span View foundation
+
+
