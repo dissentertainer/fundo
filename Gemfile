@@ -32,6 +32,8 @@ gem 'redis-namespace', '~> 1.3.2'
 gem 'devise'
 gem 'httparty'
 gem 'better_errors'
+gem "binding_of_caller"
+
 
 group :development, :test do
   gem 'rspec-rails'
