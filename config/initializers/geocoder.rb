@@ -4,6 +4,7 @@ uri = URI.parse(ENV["REDISTOGO_URL"])
 
 Geocoder.configure(
   timeout: 10,
+  ip_lookup: :ipinfo_io,
   lookup: :google,
   use_https: true,
   api_key: ENV['GOOGLE_API_KEY'],
