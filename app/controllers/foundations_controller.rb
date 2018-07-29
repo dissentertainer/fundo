@@ -32,8 +32,10 @@ class FoundationsController < ApplicationController
   end
 
   def get_user_country
-    loc = set_location
-    user_location = Geocoder.search("#{loc.data['latitude']},#{loc.data['longitude']}").first
+    location = set_location
+    location.data["latitude"] = location.data["loc"].split(',')[0] unless location.data["latitude"].present?
+    location.data["longitude"] = location.data["loc"].split(',')[1] unless location.data["longitude"].present?
+    user_location = Geocoder.search("#{location.data["latitude"]},#{location.data["longitude"]}").first
     @user_country ||= ISO3166::Country.find_country_by_name(user_location.country)
   end
 end
