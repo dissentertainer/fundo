@@ -8,7 +8,7 @@ class FoundationsController < ApplicationController
   def new
     country = get_user_country
     @user_country_code = country.alpha2
-    @user_local_currency = country.currency.iso_code
+    @user_local_currency = country.currency_code
     @foundation = Foundation.new
   end
 
