@@ -1,5 +1,5 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
-@import "materialize/components/color";
+@import "materialize/components/color-variables";
 $primary-color: color("pink", "base") !default;
 $secondary-color: color("blue", "lighten-1") !default;
 $muted-color: color("grey", "base") !default;
